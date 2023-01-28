@@ -74,3 +74,22 @@ Java Web Application Server 2022
 </details>
 
 
+<details>
+<summary>JVM</summary>
+<div markdown="1">
+
+* 바이트 코드로 변환된 자바 프로그램을 실행하는 가상 머신
+* JDK(Java Development Kit), JRE(Java Runtime Environment)와 한 세트, 별도로 설치하거나 그러지 않음
+  * JDK: 개발을 위한 tool, 개발자가 사용
+  * JRE: 자바 프로그램 실행을 위한 환경 제공
+* 자바가 어느 환경에서든 실행될 수 있게 하는 핵심 기술(WORA - write once run anywhere)
+  * C++의 경우, 실행되는 환경에 따라 컴파일되기 때문에 윈도우에서 컴파일한 결과물은 Linux에서 실행되지 않을 수 있음
+  * 자바의 경우, 컴파일 시 바로 CPU가 실행할 수 있는 기계어로 변환되지 않고 우선적으로 JVM에 의해 바이트코드로 변환됨
+  * JVM은 바이트코드를 CPU가 실행할 수 있는 기계어로 변환함
+  * 이 과정을 통해 자바코드(바이트코드)는 JVM이 설치되어 있는 모든 환경에서 실행될 수 있음 - platform independent
+  * 자바는 platform independent 하지만 JVM은 당연히 운영체제에 따라 여러가지 버전이 존재해야 함 
+
+</div>
+</details>
+
+
