@@ -9,8 +9,8 @@ Java Web Application Server 2022
 
 ## 간략한 코드 구조
 1. webserver/WebServer에서 각 요청마다 Socket 객체 생성 및 ClientRequestThread 생성
-2. ClientRequestThread에서 Enum 객체인 HttpMethod를 통해 해당 메소드와 URL에 해당하는 handler 실행시켜 byte[] body 생성
-3. response handler에서 request와 body를 이용해 적절한 response 생성 후 전송 (구현 예정)
+2. ClientRequestThread에서 Enum 객체인 HttpMethod를 통해 해당 메소드와 URL에 해당하는 handler 실행시켜 Response 객체 생성
+3. 생성한 Response 객체를 기반으로 HttpResponse에서 DataOutputStream을 이용해 flush
 
 ## 학습한 내용
 <details>
@@ -88,6 +88,35 @@ Java Web Application Server 2022
   * JVM은 바이트코드를 CPU가 실행할 수 있는 기계어로 변환함
   * 이 과정을 통해 자바코드(바이트코드)는 JVM이 설치되어 있는 모든 환경에서 실행될 수 있음 - platform independent
   * 자바는 platform independent 하지만 JVM은 당연히 운영체제에 따라 여러가지 버전이 존재해야 함 
+* JVM은 메모리에서 돌아가고, 하나의 자바 프로세스 당 하나의 JVM이 존재
+* JVM은 non-daemon thread가 모두 종료되면 메모리에서 사라짐
+  * JVM daemon thread는 백그라운드에서 돌아가는 우선 순위가 낮은 스레드로, 사용자의 애플리케이션을 보조하는 역할을 수행
+  * 대표적으로 GC
+  * 일반 스레드가 모두 종료되면 JVM이 할당 해제되는 것과 함께 daemon thread는 강제로 종료됨
+
+</div>
+</details>
+
+<details>
+<summary>JVM 구성</summary>
+<div markdown="1">
+
+* Class Loader
+  * 3가지 작업 수행 - Loading, Linking, Initialization
+    * Loading - 컴파일한 바이트 코드(.class)를 읽고 아래 데이터를 Runtime Data Area의 method area에 저장함
+      * load한 클래스와 근접 부모 클래스의 FQCN(Fully Qualified Class Name - 패키지 경로를 포함한 클래스 이름)
+      * load한 클래스가 클래스, 인터페이스, enum 중 어떤 것인지에 대한 정보
+      * 제어자, 변수, 메소드에 대한 정보
+      * 3가지 class loader
+        * Boostrap class loader 
+          * 모든 class loader의 부모
+          * jre/lib/rt.jar(runtime java archive)에서 JVM을 구동하는데 필수적인 JDK 클래스 파일을 로딩함
+          * 네이티브 언어로 구현됨
+        * Extension class loader
+          * jre/lib/ext의 클래스 파일을 로딩(TODO: 자세히 알아보기)
+        * Application class loader
+          * application classpath의 클래스 파일을 로딩함
+          * 간단히 말해서 개발자가 작성한 자바 코드의 클래스 파일을 로딩함
 
 </div>
 </details>
