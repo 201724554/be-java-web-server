@@ -79,6 +79,7 @@ Java Web Application Server 2022
 <div markdown="1">
 
 * 바이트 코드로 변환된 자바 프로그램을 실행하는 가상 머신
+* JVM 자체는 지키도록 권장되는 specification, 실제로는 구현하기 나름
 * JDK(Java Development Kit), JRE(Java Runtime Environment)와 한 세트, 별도로 설치하거나 그러지 않음
   * JDK: 개발을 위한 tool, 개발자가 사용
   * JRE: 자바 프로그램 실행을 위한 환경 제공
@@ -103,7 +104,7 @@ Java Web Application Server 2022
 
 * Class Loader
   * 3가지 작업 수행 - Loading, Linking, Initialization
-    * Loading - 컴파일한 바이트 코드(.class)를 읽고 아래 데이터를 Runtime Data Area의 method area에 저장함
+    * Loading - 컴파일한 바이트 코드(.class)를 읽고 아래(binary) 데이터를 생성해 Runtime Data Area의 method area에 저장함
       * load한 클래스와 근접 부모 클래스의 FQCN(Fully Qualified Class Name - 패키지 경로를 포함한 클래스 이름)
       * load한 클래스가 클래스, 인터페이스, enum 중 어떤 것인지에 대한 정보
       * 제어자, 변수, 메소드에 대한 정보
@@ -114,9 +115,19 @@ Java Web Application Server 2022
           * 네이티브 언어로 구현됨
         * Extension class loader
           * jre/lib/ext의 클래스 파일을 로딩(TODO: 자세히 알아보기)
-        * Application class loader
+        * Application(System) class loader
           * application classpath의 클래스 파일을 로딩함
           * 간단히 말해서 개발자가 작성한 자바 코드의 클래스 파일을 로딩함
+        * 4가지 Principle
+          * Delegate Hierarchy Principle
+            * 클래스 A를 로딩할 때, Application class loader에서 시작해 상위 class loader로 위임(Class -> Extension -> Bootstrap)
+            * 최상위 class loader부터 클래스를 찾음 -> BootStrap에서 못 찾으면 Extension으로, 없으면 Class로, 최하위에서도 못 찾으면 ClassNotFoundException
+            * Visibility, Uniquenessprinciple을 만족시키기 위함
+          * Visibility Principle - 상위 class loader는 하위 class loader가 load한 클래스를 볼 수 없음, 반대는 가능
+          * Uniqueness Principle - 상위 class loader가 load한 클래스를 하위 class loader가 중복으로 load 하지 말아야 함
+          * No Unloading Principle - class loader는 load한 클래스를 unload할 수 없음, 대신 현재 class loader를 없애고 새롭게 생성은 가능
+  * Linking
+  * Initialization
 
 </div>
 </details>
