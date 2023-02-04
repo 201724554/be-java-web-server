@@ -127,6 +127,18 @@ Java Web Application Server 2022
           * Uniqueness Principle - 상위 class loader가 load한 클래스를 하위 class loader가 중복으로 load 하지 말아야 함
           * No Unloading Principle - class loader는 load한 클래스를 unload할 수 없음, 대신 현재 class loader를 없애고 새롭게 생성은 가능
   * Linking
+    * 3가지 단계
+      * Verification
+        * .class 파일의 유효성을 확인함
+          * 코드가 Java Specification대로 작성되었는지?
+          * JVM Specification에 맞는 컴파일러에 의해 생성되었는지?
+        * class load process 중 제일 많은 시간 소요
+      * Preparation
+        * static 변수를 위한 메모리 공간을 할당하고 기본 값으로 초기화함
+          * '기본 값'으로 초기화 함 -> static int a = 5;일때 5가 아니라 int의 기본 값인 0으로 초기화
+      * Resolution
+        * Symbolic reference를 method area에 있는 실제 주소로 변경
+          * Symbolic reference - .class 파일에서 참조하고 있는 클래스의 이름만을 지칭하는 것, JVM에 올라가면 단순히 이름만 지칭하고 있는 참조에서 참조하고 있는 객체의 주소값으로 변경
   * Initialization
 
 </div>
