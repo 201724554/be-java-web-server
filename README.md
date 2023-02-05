@@ -140,6 +140,14 @@ Java Web Application Server 2022
         * Symbolic reference를 method area에 있는 실제 주소로 변경
           * Symbolic reference - .class 파일에서 참조하고 있는 클래스의 이름만을 지칭하는 것, JVM에 올라가면 단순히 이름만 지칭하고 있는 참조에서 참조하고 있는 객체의 주소값으로 변경
   * Initialization
+    * static 변수가 코드에서 정의한 값으로 초기화되고, static{} 블록 안의 코드가 실행됨
+
+* JVM Memory
+  * Method Area
+  * Heap
+  * Stack
+  * PC Register
+  * Native Method Stack
 
 </div>
 </details>
