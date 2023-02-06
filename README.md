@@ -144,9 +144,24 @@ Java Web Application Server 2022
 
 * JVM Memory
   * Method Area
+    * Runtime Constant Pool(좀 더 알아보기)
+      * string constant, numeric constant, class reference...
+    * 메소드 정보(이름, 리턴 타입 등) + 코드
+    * 멤버(필드) 변수
+    * static 변수
+    * JVM 안에서 공유됨
   * Heap
+    * 런타임에 new 키워드로 생성된 객체 및 배열 저장
+    * GC의 대상
+    * JVM 안에서 공유됨
   * Stack
+    * 각 메소드 호출 시 하나의 stack frame 할당됨
+    * 메소드 안에서 선언되는 로컬 변수 저장
+    * 메소드가 값을 리턴하거나(끝나거나) 예외가 발생할 때 stack frame 제거됨
+    * 스레드 당 하나의 stack 할당
   * PC Register
+    * context switch 발생 시, 어디까지 실행됐는지 process count를 저장
+    * 스레드 당 하나 할당
   * Native Method Stack
 
 </div>
