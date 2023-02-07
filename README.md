@@ -142,10 +142,11 @@ Java Web Application Server 2022
   * Initialization
     * static 변수가 코드에서 정의한 값으로 초기화되고, static{} 블록 안의 코드가 실행됨
 
-* JVM Memory
+* Runtime Data Area
   * Method Area
-    * Runtime Constant Pool(좀 더 알아보기)
+    * Runtime Constant Pool
       * string constant, numeric constant, class reference...
+      * 런타임에 생성되는 static 상수 저장소
     * 메소드 정보(이름, 리턴 타입 등) + 코드
     * 멤버(필드) 변수
     * static 변수
@@ -163,7 +164,26 @@ Java Web Application Server 2022
     * context switch 발생 시, 어디까지 실행됐는지 process count를 저장
     * 스레드 당 하나 할당
   * Native Method Stack
+    * native method 호출 시 사용되는 스택
+    * native method
+      * JVM이 동작하는 아키텍쳐에서 사용되는 언어로 작성된 메소드, 주로 C, C++
 
+* Execution Engine
+  * Interpreter
+    * 바이트코드를 한 줄씩 읽고 기계어로 변환
+    * 바이트코드 한 줄을 읽고 실행하는 건 빠르지만 전체를 읽고 실행하는 건 느림
+    * 한 메소드가 여러번 호출될 경우, 매번 다시 읽고 실행하는 과정을 거침 -> JIT 컴파일러를 이용해 단점 보완
+  * JIT Compiler
+    * 특정 메소드가 반복적으로 호출되는 경우, 바이트코드를 컴파일해 native code로 변환함
+    * 이후 반복적 호출에 native code를 실행시킴 -> interpreter가 바이트코드를 한 줄씩 읽는 것 보다 좋은 성능
+    * 하지만 JIT Compiler가 바이트코드를 컴파일 하는 것보다 interpreter가 읽고 실행하는 경우가 빠른 경우가 있음 + native code는 cache에 저장됨(고비용)
+    * 이런 경우, JIT Compiler는 메소드 호출 빈도를 확인하고, 일정 횟수 이상인 경우, 위 방법 사용 -> adaptive compiling
+    * 4가지 구성
+      * Intermediate Code Generator - intermediate code(바이트코드와 native code 사이?) 생성
+      * Code Optimizer - 위에서 생성한 intermediate code optimize
+      * Target Code Generator - intermediate code에서 native code 생성
+      * Profiler - hotspot을 찾는 역할 수행(ex. 메소드가 여러번 호출되는 인스턴스 찾기)
+  * GC
 </div>
 </details>
 
