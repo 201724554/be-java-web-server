@@ -184,6 +184,23 @@ Java Web Application Server 2022
       * Target Code Generator - intermediate code에서 native code 생성
       * Profiler - hotspot을 찾는 역할 수행(ex. 메소드가 여러번 호출되는 인스턴스 찾기)
   * GC
+    * heap 영역에서 더 이상 사용하지 않는 객체를 메모리에서 할당 해제하는 역할 수행
+    * mark and sweep 방식
+      * stack 등에서 heap 영역에 생성된 객체의 레퍼런스 값을 가지고 있는데, 이를 이용해 레퍼런스 값이 가르키고 있는 객체를 마킹함
+      * 마킹되지 않은 객체(unreachable)를 모두 heap 영역에서 제거
+    * minor gc, major gc
+      * minor gc
+        * heap 공간은 eden, survivor0, survivor1, old generation으로 나뉨
+        * 객체가 처음 생성될 때 age bit가 0으로 초기화되어 eden에 할당됨
+        * eden 공간이 채워지면 minor gc가 동작하고, 살아남은 객체는 age bit가 1 더해져 survivor0으로 옮겨짐
+        * 다시 eden 공간이 채워지면 minor gc가 동작, 살아남은 객체는 age bit가 1 더해져 survivor1로 옮겨짐 -> 0에서 1, 1에서 0, 즉 survivor 영역 중 하나는 반드시 비워진 상태
+        * age bit가 특정 정도보다 커지면 해당 객체를 old generation으로 이동, old generation은 minor gc의 대상이 아님, 즉 상시 사용되는 객체를 저장함
+      * major gc
+        * old generation 영역이 채워지면 major gc 동작
+        * old generation의 모든 객체를 대상으로 실행됨
+        * 매우 비용이 큰 동작, 동작 시 모든 스레드가 정지함 -> stop the world
+        * JVM을 튜닝할 때, major gc의 동작 빈도를 줄이고 minor gc가 자주 동작하도록 하는 경우가 많음
+    * System.gc()로 직접 gc를 호출할 수 있지만 금기시 됨 -> 호출 시점에서 프로세스의 상태를 알 수 없음, 어떤 스레드에서 어떤 동작을 하는지는 매 순간 다르므로 직접 호출하는 건 위험함
 </div>
 </details>
 
